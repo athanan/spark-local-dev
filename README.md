@@ -39,5 +39,5 @@ docker-compose up -d --scale spark-worker=2
     - range of Spark Web UI port is `4051-4060`
 2. run through spark-submit command through `spark-master` (see [spark_script.py](./spark_script.py))
     - execute `docker exec -it spark-master /bin/bash`
-    - then do spark-submit `spark-submit --master spark://spark-master:7077 script.py`
+    - then do spark-submit `spark-submit --master spark://spark-master:7077 spark_script.py`
     - range of Spark Web UI port is `4040-4050`
