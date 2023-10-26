@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  spark-master:
+    image: spark-in-local:spark3.4.1-python3.10.13
+    container_name: spark-master
+    ports:
+      - "4040-4050:4040-4050"
+      - "7077:7077"
+      - "8080:8080"
+    entrypoint: ["/bin/bash", "-c", "/start.sh"]
+    environment:
+      SPARK_CONF_DIR: /opt/spark/conf
+      SPARK_RUN_MODE: master
+    volumes:
+      - ./:/home
+      - ./conf/master:/opt/spark/conf
+
+  spark-worker:
+    image: spark-in-local:spark3.4.1-python3.10.13
+    entrypoint: ["/bin/bash", "-c", "/start.sh"]
+    environment:
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_WORKER_CORES: 1
+      SPARK_RUN_MODE: worker
+      SPARK_MASTER_URL: spark://spark-master:7077
+    volumes:
+      - ./:/home
+      - ./conf/worker:/opt/spark/conf
+  
+  spark-history:
+    image: spark-in-local:spark3.4.1-python3.10.13
+    container_name: spark-history
+    ports:
+      - "18080:18080"
+    entrypoint: ["/bin/bash", "-c", "/start.sh"]
+    environment:
+      SPARK_CONF_DIR: /opt/spark/conf
+      SPARK_RUN_MODE: history
+    volumes:
+      - ./spark-events:/home/spark-events
+      - ./conf/history:/opt/spark/conf
+  
+  notebook:
+    image: spark-in-local:spark3.4.1-python3.10.13
+    container_name: notebook
+    ports:
+      - "8089:8089"
+      - "4051-4060:4051-4060"
+    entrypoint: ["/bin/bash", "-c", "jupyter lab --ip=0.0.0.0 --port=8089 --allow-root --no-browser --NotebookApp.token=''"]
+    volumes:
+      - ./:/home
+
