@@ -6,8 +6,9 @@ This repository contains Spark for local docker development
 1. Apache Spark 3.4.1
     - Spark in Standalone Cluster Mode
     - Spark History Server
-2. Python 3.10.13 
-3. Jupyter Lab
+2. Apache Hadoop 3.3.6
+3. Python 3.10.13 
+4. Jupyter Lab
 
 ## Services in Docker
 | Name | URL |
