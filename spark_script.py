@@ -23,3 +23,5 @@ df = spark.read.format('parquet').load(data_dir)
 
 print(f"row count: {df.count()}")
 print(df.printSchema())
+
+df.limit(1000).write.format('parquet').mode('overwrite').save('s3a://spark-warehouse/raw_data/save_from_spark_script')
