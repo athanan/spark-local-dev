@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "$SPARK_RUN_MODE"
+echo "Run mode: $SPARK_RUN_MODE"
 
 if [ "$SPARK_RUN_MODE" == "master" ];
 then
