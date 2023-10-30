@@ -20,10 +20,11 @@ This repository contains Spark for local docker development
 ## How to Get Started
 - build the docker
 ```
-docker build -t spark-in-local:spark-3.4.1-python3.10.13 \
+docker build -t spark-in-local:spark3.4.1-python3.10.13 \
     --build-arg python_version=3.10.13 \
     --build-arg spark_version=3.4.1 \
     --build-arg maven_version=3.9.4 \
+    --build-arg hadoop_version=3.3.6 \
     .
 ```
 - start the components
