@@ -52,3 +52,34 @@ services:
       - ./:/home
       - ./conf/master:/opt/spark/conf
 
+  minio:
+    image: minio/minio:RELEASE.2023-10-25T06-33-25Z
+    container_name: minio
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ${PWD}/data/minio:/data
+    ports:
+      - 9000:9000
+      - 9001:9001
+    entrypoint: sh
+    command: -c '/opt/bin/minio server --console-address ":9001" /data'
+  
+  minio-mc:
+    image: minio/mc:RELEASE.2023-10-24T21-42-22Z
+    container_name: init-minio-bucket
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set minio http://minio:9000 minioadmin minioadmin;
+      /usr/bin/mc mb minio/spark-warehouse;
+      /usr/bin/mc anonymous set public minio/spark-warehouse;
+      exit 0;
+      "
