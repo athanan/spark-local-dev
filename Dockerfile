@@ -64,7 +64,10 @@ ENV HADOOP_HOME /opt/hadoop
 ENV HADOOP_OPTIONAL_TOOLS="hadoop-aws"
 ENV SPARK_DIST_CLASSPATH=${HADOOP_HOME}/etc/hadoop:${HADOOP_HOME}/share/hadoop/common/lib/*:${HADOOP_HOME}/share/hadoop/common/*:${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar:${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar:${HADOOP_HOME}/share/hadoop/hdfs:${HADOOP_HOME}/share/hadoop/hdfs/lib/*:${HADOOP_HOME}/share/hadoop/hdfs/*:${HADOOP_HOME}/share/hadoop/mapreduce/*:${HADOOP_HOME}/share/hadoop/yarn:${HADOOP_HOME}/share/hadoop/yarn/lib/*:${HADOOP_HOME}/share/hadoop/yarn/*
 ENV PYTHONPATH /opt/spark/python
-ENV PYSPARK_DRIVER_PYTHON=/usr/local/bin/python3
+ENV PYSPARK_PYTHON=/usr/local/bin/python3
+ENV PYSPARK_DRIVER_PYTHON="jupyter"
+ENV PYSPARK_DRIVER_PYTHON_OPTS="lab --no-browser --port=8089"
+
 
 ENV PYSPARK_PYTHON python3
 ENV M2_HOME /opt/maven
