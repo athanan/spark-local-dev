@@ -80,4 +80,8 @@ COPY conf/hadoop/core-site.xml ${SPARK_HOME}/etc/hadoop/core-site.xml
 COPY ./script/start.sh /start.sh
 RUN chmod +x /start.sh
 
+# disable spark's log 
+RUN ipython profile create && \
+    echo "c.IPKernelApp.capture_fd_output = False" >> "/root/.ipython/profile_default/ipython_kernel_config.py"
+
 WORKDIR /home
