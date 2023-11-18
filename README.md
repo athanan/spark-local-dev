@@ -26,7 +26,7 @@ docker build -t spark-in-local:latest \
     --build-arg spark_version=3.4.1 \
     --build-arg maven_version=3.9.4 \
     --build-arg hadoop_version=3.3.6 \
-    --build-arg hive_version=3.1.3 \
+    --build-arg hive_version=2.3.9 \
     .
 ```
 - start the components
@@ -44,21 +44,3 @@ docker-compose up -d --scale spark-worker=2
     - execute `docker exec -it spark-master /bin/bash`
     - then do spark-submit `spark-submit --master spark://spark-master:7077 spark_script.py`
     - range of Spark Web UI port is `4040-4050`
-
-
-
-CREATE DATABASE local_db LOCATION 's3a://spark-warehouse/local_db';
-
-CREATE EXTERNAL TABLE local_db.test_table 
-(`id` string, `f_anme` string)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY "\u003B" STORED AS TEXTFILE
-LOCATION "s3a://spark-warehouse/local_db/test_table" 
-TBLPROPERTIES("skip.header.line.count"="1");
-
-INSERT INTO local_db.test_table VALUES ('A', 'B');
-
-SELECT * FROM local_db.test_table;
-
-spark-shell
-import org.apache.spark.sql.SparkSession
-val spark = SparkSession.builder().appName("Sname").enableHiveSupport().getOrCreate()
