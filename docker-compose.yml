@@ -14,7 +14,6 @@ services:
       SPARK_RUN_MODE: master
     volumes:
       - ./:/home
-      - ./conf/master:/opt/spark/conf
 
   spark-worker:
     image: spark-in-local:spark3.4.1-python3.10.13
@@ -26,7 +25,6 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     volumes:
       - ./:/home
-      - ./conf/worker:/opt/spark/conf
   
   spark-history:
     image: spark-in-local:spark3.4.1-python3.10.13
@@ -39,7 +37,6 @@ services:
       SPARK_RUN_MODE: history
     volumes:
       - ./spark-events:/home/spark-events
-      - ./conf/history:/opt/spark/conf
   
   notebook:
     image: spark-in-local:spark3.4.1-python3.10.13
@@ -50,7 +47,6 @@ services:
     entrypoint: ["/bin/bash", "-c", "jupyter lab --ip=0.0.0.0 --port=8089 --allow-root --no-browser --NotebookApp.token=''"]
     volumes:
       - ./:/home
-      - ./conf/master:/opt/spark/conf
 
   minio:
     image: minio/minio:RELEASE.2023-10-25T06-33-25Z
@@ -83,3 +79,26 @@ services:
       /usr/bin/mc anonymous set public minio/spark-warehouse;
       exit 0;
       "
+  postgres:
+    image: postgres:12-alpine
+    container_name: pg-metastore
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: metastore_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    ports:
+      - '5432:5432'
+  
+  metastore:
+    image: spark-in-local:spark3.4.1-python3.10.13
+    container_name: metastore
+    ports:
+      - "9083:9083"
+    entrypoint: ["/bin/bash", "-c", "/start-metastore.sh"]
+    depends_on:
+      - postgres
