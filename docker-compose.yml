@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   spark-master:
-    image: spark-in-local:spark3.4.1-python3.10.13
+    image: spark-in-local:latest
     container_name: spark-master
     ports:
       - "4040-4050:4040-4050"
@@ -16,7 +16,7 @@ services:
       - ./:/home
 
   spark-worker:
-    image: spark-in-local:spark3.4.1-python3.10.13
+    image: spark-in-local:latest
     entrypoint: ["/bin/bash", "-c", "/start.sh"]
     environment:
       SPARK_WORKER_MEMORY: 1g
@@ -27,7 +27,7 @@ services:
       - ./:/home
   
   spark-history:
-    image: spark-in-local:spark3.4.1-python3.10.13
+    image: spark-in-local:latest
     container_name: spark-history
     ports:
       - "18080:18080"
@@ -39,7 +39,7 @@ services:
       - ./spark-events:/home/spark-events
   
   notebook:
-    image: spark-in-local:spark3.4.1-python3.10.13
+    image: spark-in-local:latest
     container_name: notebook
     ports:
       - "8089:8089"
@@ -95,7 +95,7 @@ services:
       - '5432:5432'
   
   metastore:
-    image: spark-in-local:spark3.4.1-python3.10.13
+    image: spark-in-local:latest
     container_name: metastore
     ports:
       - "9083:9083"

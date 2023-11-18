@@ -41,23 +41,23 @@ RUN pip3 install --upgrade pip
 FROM python3 AS spark-hive-hadoop
 
 # install spark
-ARG SPARK_VERSION=3.4.1
+ARG spark_version=3.4.1
 RUN echo "installing Spark version ${spark_version}"
-RUN wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-without-hadoop.tgz && \
-    tar -xvf spark-${SPARK_VERSION}-bin-without-hadoop.tgz -C /opt && rm spark-${SPARK_VERSION}-bin-without-hadoop.tgz && \
-    ln -s spark-${SPARK_VERSION}-bin-without-hadoop /opt/spark
+RUN wget https://archive.apache.org/dist/spark/spark-${spark_version}/spark-${spark_version}-bin-without-hadoop.tgz && \
+    tar -xvf spark-${spark_version}-bin-without-hadoop.tgz -C /opt && rm spark-${spark_version}-bin-without-hadoop.tgz && \
+    ln -s spark-${spark_version}-bin-without-hadoop /opt/spark
 
 # install hadoop
-ARG HADOOP_VERSION=3.3.6
-RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz && \
-    tar -xvf hadoop-${HADOOP_VERSION}.tar.gz -C /opt && rm hadoop-${HADOOP_VERSION}.tar.gz && \
-    ln -s hadoop-${HADOOP_VERSION} /opt/hadoop
+ARG hadoop_version=3.3.6
+RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-${hadoop_version}/hadoop-${hadoop_version}.tar.gz && \
+    tar -xvf hadoop-${hadoop_version}.tar.gz -C /opt && rm hadoop-${hadoop_version}.tar.gz && \
+    ln -s hadoop-${hadoop_version} /opt/hadoop
 
 # install hive metastore
-ARG HIVE_VERSION=3.1.3
-RUN wget https://downloads.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz && \
-    tar -xvf apache-hive-${HIVE_VERSION}-bin.tar.gz -C /opt && rm apache-hive-${HIVE_VERSION}-bin.tar.gz && \
-    ln -s apache-hive-${HIVE_VERSION}-bin /opt/hive
+ARG hive_version=3.1.3
+RUN wget https://downloads.apache.org/hive/hive-${hive_version}/apache-hive-${hive_version}-bin.tar.gz && \
+    tar -xvf apache-hive-${hive_version}-bin.tar.gz -C /opt && rm apache-hive-${hive_version}-bin.tar.gz && \
+    ln -s apache-hive-${hive_version}-bin /opt/hive
 
 RUN wget -P /opt/hive/lib https://jdbc.postgresql.org/download/postgresql-42.6.0.jar --no-check-certificate
 
