@@ -1,7 +1,7 @@
 <configuration>
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://0.0.0.0:9083</value>
+        <value>thrift://metastore:9083</value>
     </property>
     <property>
         <name>hive.metastore.warehouse.dir</name>
