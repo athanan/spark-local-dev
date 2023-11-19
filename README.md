@@ -1,14 +1,15 @@
 # Spark for Local Development
 
-This repository contains Spark for local docker development
+This repository contains Spark for local docker development, built-in with Hive Metastore and Minio
 
 ## Components
 1. Apache Spark 3.4.1
     - Spark in Standalone Cluster Mode
     - Spark History Server
 2. Apache Hadoop 3.3.6
-3. Python 3.10.13 
-4. Jupyter Lab
+3. Apache Hive 2.3.9
+4. Python 3.10.13 
+5. Jupyter Lab
 
 ## Services in Docker
 | Name | URL |
@@ -44,3 +45,4 @@ docker-compose up -d --scale spark-worker=2
     - execute `docker exec -it spark-master /bin/bash`
     - then do spark-submit `spark-submit --master spark://spark-master:7077 spark_script.py`
     - range of Spark Web UI port is `4040-4050`
+    - the script [spark_script.py](./spark_script.py) contains example of how to create Hive table and Iceberg table, which store data externally in S3 (Minio)
