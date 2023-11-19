@@ -10,14 +10,17 @@ This repository contains Spark for local docker development, built-in with Hive 
 3. Apache Hive 2.3.9
 4. Python 3.10.13 
 5. Jupyter Lab
+6. Minio Server (S3)
 
 ## Services in Docker
-| Name | URL |
-| ----- | ----- |
-| Jupyter Lab | [http://localhost:8089](http://localhost:8089) |
-| Spark Master | [http://localhost:8080](http://localhost:8080) |
-| Spark History Server | [http://localhost:18080](http://localhost:18080) |
-| Spark Web UI | [http://localhost:4040-4060](http://localhost:4040-4060) |
+| Name | URL | Remark |
+| ----- | ----- | ----- |
+| Jupyter Lab | [http://localhost:8089](http://localhost:8089) | |
+| Spark Master | [http://localhost:8080](http://localhost:8080) | |
+| Spark History Server | [http://localhost:18080](http://localhost:18080) | |
+| Spark Web UI | [http://localhost:4040-4060](http://localhost:4040-4060) | |
+| Minio Web UI | [http://localhost:9000](http://localhost:9000) | `minioadmin` is username and password |
+| Hive Metastore | [thrift://localhost:9083](thrift://localhost:9083) | |
 
 ## How to Get Started
 - build the docker
@@ -46,3 +49,8 @@ docker-compose up -d --scale spark-worker=2
     - then do spark-submit `spark-submit --master spark://spark-master:7077 spark_script.py`
     - range of Spark Web UI port is `4040-4050`
     - the script [spark_script.py](./spark_script.py) contains example of how to create Hive table and Iceberg table, which store data externally in S3 (Minio)
+
+## Notes 
+- The Hive database `local_db` is created automatically when you started the docker
+- The data is stored in your local machine, The Hive table and data will not get lost when you down the docker-compose
+- The S3 bucket `spark-warehouse` is created automatically
