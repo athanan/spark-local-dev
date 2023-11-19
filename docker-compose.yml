@@ -103,4 +103,20 @@ services:
       - "9083:9083"
     entrypoint: ["/bin/bash", "-c", "/start-metastore.sh"]
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+  
+  init-hive-db: # init hive database 
+    image: spark-in-local:latest
+    container_name: init-hive-db
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+    entrypoint:
+      - "/bin/bash"
+      - "-c"
+      - "hive -e \"CREATE DATABASE IF NOT EXISTS local_db LOCATION 's3a://spark-warehouse/hive/local_db'\""
+    depends_on:
+      - metastore
