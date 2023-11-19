@@ -71,12 +71,16 @@ ENV SPARK_HOME /opt/spark
 ENV HADOOP_HOME /opt/hadoop
 ENV HADOOP_OPTIONAL_TOOLS="hadoop-aws"
 ENV HIVE_HOME=/opt/hive
-ENV SPARK_DIST_CLASSPATH=${HIVE_HOME}/lib:${HADOOP_HOME}/etc/hadoop:${HADOOP_HOME}/share/hadoop/common/lib/*:${HADOOP_HOME}/share/hadoop/common/*:${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar:${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar:${HADOOP_HOME}/share/hadoop/hdfs:${HADOOP_HOME}/share/hadoop/hdfs/lib/*:${HADOOP_HOME}/share/hadoop/hdfs/*:${HADOOP_HOME}/share/hadoop/mapreduce/*:${HADOOP_HOME}/share/hadoop/yarn:${HADOOP_HOME}/share/hadoop/yarn/lib/*:${HADOOP_HOME}/share/hadoop/yarn/*
+ENV SPARK_DIST_CLASSPATH=${HADOOP_HOME}/etc/hadoop:${HADOOP_HOME}/share/hadoop/common/lib/*:${HADOOP_HOME}/share/hadoop/common/*:${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar:${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar:${HADOOP_HOME}/share/hadoop/hdfs:${HADOOP_HOME}/share/hadoop/hdfs/lib/*:${HADOOP_HOME}/share/hadoop/hdfs/*:${HADOOP_HOME}/share/hadoop/mapreduce/*:${HADOOP_HOME}/share/hadoop/yarn:${HADOOP_HOME}/share/hadoop/yarn/lib/*:${HADOOP_HOME}/share/hadoop/yarn/*
 ENV PYTHONPATH /opt/spark/python
 ENV PYSPARK_PYTHON=python3
 ENV M2_HOME /opt/maven
 ENV MAVEN_HOME /opt/maven
 ENV PATH ${SPARK_HOME}/bin:${M2_HOME}/bin:${HADOOP_HOME}/bin:${HIVE_HOME}/bin:$PATH
+
+# Add Spark Hive
+RUN wget -P ${SPARK_HOME}/jars https://repo1.maven.org/maven2/org/apache/spark/spark-hive_2.12/3.4.1/spark-hive_2.12-3.4.1.jar
+RUN ln -s ${HIVE_HOME}/lib/hive-* ${SPARK_HOME}/jars
 
 COPY conf/hadoop/core-site.xml ${HADOOP_HOME}/etc/hadoop/core-site.xml
 COPY conf/hadoop/core-site.xml ${SPARK_HOME}/etc/hadoop/core-site.xml
