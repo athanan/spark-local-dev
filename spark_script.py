@@ -1,7 +1,8 @@
 """
 spark-submit \
     --master spark://spark-master:7077 \
-    --packages org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.4.2 \
+    --packages org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.6.1 \
+    --conf spark.ui.port=4052 \
     --conf spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions \
     --conf spark.sql.catalog.spark_catalog=org.apache.iceberg.spark.SparkSessionCatalog \
     --conf spark.sql.catalog.spark_catalog.type=hive \
@@ -36,18 +37,6 @@ df.limit(1000).write.format('parquet').mode('overwrite').save('s3a://spark-wareh
 
 # create new Spark table, register table metadata on Hive, and store data in s3
 hive_db = 'local_db'
-hive_table_name = 'test_hive_table'
-
-print(f"create table {hive_db}.{hive_table_name}")
-df.limit(1000).write.format('parquet').saveAsTable(f'{hive_db}.{hive_table_name}')
-
-createtab_stmt = spark.sql(f'SHOW CREATE TABLE {hive_db}.{hive_table_name}').collect()[0]['createtab_stmt']
-print(createtab_stmt)
-spark.sql(f'SELECT * FROM {hive_db}.{hive_table_name} LIMIT 100').show(truncate=False)
-spark.sql(f'DROP TABLE {hive_db}.{hive_table_name}')
-
-
-# create new Iceberg table, register table pointer in Hive, and store data in s3
 hive_table_name = 'test_iceberg_table'
 
 print(f"create table {hive_db}.{hive_table_name}")
