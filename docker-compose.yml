@@ -23,7 +23,20 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     volumes:
       - ./:/home
-  
+      
+  spark-history:
+    image: spark-in-local:latest
+    container_name: spark-history
+    ports:
+      - "18080:18080"
+    entrypoint: ["/bin/bash", "-c", "/start.sh"]
+    environment:
+      SPARK_CONF_DIR: /opt/spark/conf
+      SPARK_RUN_MODE: history
+    depends_on:
+      minio-mc:
+        condition: service_completed_successfully
+
   notebook:
     image: spark-in-local:latest
     container_name: notebook
@@ -61,6 +74,8 @@ services:
       /usr/bin/mc alias set minio http://minio:9000 minioadmin minioadmin;
       /usr/bin/mc mb minio/spark-warehouse;
       /usr/bin/mc anonymous set public minio/spark-warehouse;
+      /usr/bin/mc mb minio/spark-event;
+      /usr/bin/mc anonymous set public minio/spark-event;
       exit 0;
       "
   postgres:
