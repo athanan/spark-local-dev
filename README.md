@@ -33,10 +33,10 @@ docker build -t spark-in-local:latest \
 ```
 - start the components
 ```
-docker-compose up -d
+docker compose up -d
 
 # scale spark worker
-docker-compose up -d --scale spark-worker=2
+docker compose up -d --scale spark-worker=2
 ```
 
 ## How to run PySpark 
