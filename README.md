@@ -3,12 +3,12 @@
 This repository contains Spark for local docker development, built-in with Hive Metastore and Minio
 
 ## Components
-1. Apache Spark 3.4.1
+1. Apache Spark 3.5.3
     - Spark in Standalone Cluster Mode
     - Spark History Server
 2. Apache Hadoop 3.3.6
 3. Apache Hive 2.3.9
-4. Python 3.10.13 
+4. Python 3.12.17 
 5. Jupyter Lab
 6. Minio Server (S3)
 
@@ -26,9 +26,7 @@ This repository contains Spark for local docker development, built-in with Hive 
 - build the docker
 ```
 docker build -t spark-in-local:latest \
-    --build-arg python_version=3.10.13 \
-    --build-arg spark_version=3.4.1 \
-    --build-arg maven_version=3.9.4 \
+    --build-arg spark_version=3.5.3 \
     --build-arg hadoop_version=3.3.6 \
     --build-arg hive_version=2.3.9 \
     .
