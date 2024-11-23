@@ -39,6 +39,10 @@ docker compose up -d
 docker compose up -d --scale spark-worker=2
 ```
 
+## Prepare Sample Data
+- you can simply run `./script/download_sample_data.sh` in order to download 3 months of nyc taxt data 2024
+- then you can upload it to bucket `s3://raw-data`
+
 ## How to run PySpark 
 1. run through Jupyter Notebook (see [spark_nb.ipynb](./spark_nb.ipynb))
     - range of Spark Web UI port is `4051-4060`

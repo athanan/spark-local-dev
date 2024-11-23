@@ -76,6 +76,8 @@ services:
       /usr/bin/mc anonymous set public minio/spark-warehouse;
       /usr/bin/mc mb minio/spark-event;
       /usr/bin/mc anonymous set public minio/spark-event;
+      /usr/bin/mc mb minio/raw-data;
+      /usr/bin/mc anonymous set public minio/raw-data;
       exit 0;
       "
   postgres:
