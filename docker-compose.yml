@@ -3,7 +3,6 @@ services:
     image: spark-in-local:latest
     container_name: spark-master
     ports:
-      - "4040-4050:4040-4050"
       - "7077:7077"
       - "8080:8080"
     entrypoint: ["/bin/bash", "-c", "/start.sh"]
@@ -42,7 +41,7 @@ services:
     container_name: notebook
     ports:
       - "8089:8089"
-      - "4051-4060:4051-4060"
+      - "4040-4060:4040-4060"
     entrypoint: ["/bin/bash", "-c", "jupyter lab --ip=0.0.0.0 --port=8089 --allow-root --no-browser --NotebookApp.token=''"]
     volumes:
       - ./:/home
