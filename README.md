@@ -44,8 +44,8 @@ docker compose up -d --scale spark-worker=2
 - then you can upload it to bucket `s3://raw-data`
 
 ## How to run PySpark 
-1. run through Jupyter Notebook (see [spark_nb.ipynb](./spark_nb.ipynb))
-    - range of Spark Web UI port is `4051-4060`
+1. run through Jupyter Notebook
+    - range of Spark Web UI port is `4040-4050`
 2. run through spark-submit command through `spark-master` (see [spark_script.py](./spark_script.py))
     - execute `docker exec -it spark-master /bin/bash`
     - then do spark-submit (see spark-submit script in [spark_script.py](./spark_script.py))
@@ -54,5 +54,4 @@ docker compose up -d --scale spark-worker=2
 
 ## Notes 
 - The Hive database `local_db` is created automatically when you started the docker
-- The data is stored in your local machine, The Hive table and data will not get lost when you down the docker-compose
-- The S3 bucket `spark-warehouse` is created automatically
+- The S3 bucket `spark-warehouse`, `raw-data,` and `spark-event` are created automatically
