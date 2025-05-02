@@ -11,6 +11,7 @@ This repository contains Spark for local docker development, built-in with Hive 
 4. Python 3.12.17 
 5. Jupyter Lab
 6. Minio Server (S3)
+7. Iceberg PostgreSQL JDBC Catalog
 
 ## Services in Docker
 | Name | URL | Remark |
@@ -21,6 +22,7 @@ This repository contains Spark for local docker development, built-in with Hive 
 | Spark Web UI | [http://localhost:4040-4060](http://localhost:4040-4060) | |
 | Minio Web UI | [http://localhost:9000](http://localhost:9000) | `minioadmin` is username and password |
 | Hive Metastore | [thrift://localhost:9083](thrift://localhost:9083) | |
+| Iceberg PostgreSQL JDBC Catalog | [http://localhost:5433](http://localhost:5433) | |
 
 ## How to Get Started
 - build the docker
