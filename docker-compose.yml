@@ -118,3 +118,18 @@ services:
       - "hive -e \"CREATE DATABASE IF NOT EXISTS local_db LOCATION 's3a://spark-warehouse/hive/local_db'\""
     depends_on:
       - metastore
+
+  iceberg-postgres:
+    image: postgres:12-alpine
+    container_name: pg-iceberg-metastore
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: metastore_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    ports:
+      - '5433:5432'
