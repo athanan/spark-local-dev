@@ -1,3 +1,5 @@
+
+
 # Spark for Local Development
 
 This repository contains Spark for local docker development, built-in with Hive Metastore and Minio
@@ -45,11 +47,11 @@ docker compose up -d --scale spark-worker=2
 
 ## How to run PySpark 
 1. run through Jupyter Notebook
-    - range of Spark Web UI port is `4040-4050`
+    - range of Spark Web UI port is `4040-4060`
 2. run through spark-submit command through `spark-master` (see [spark_script.py](./spark_script.py))
     - execute `docker exec -it spark-master /bin/bash`
     - then do spark-submit (see spark-submit script in [spark_script.py](./spark_script.py))
-    - range of Spark Web UI port is `4040-4050`
+    - range of Spark Web UI port is `4040-4060`
     - the script [spark_script.py](./spark_script.py) contains example of how to create Hive table and Iceberg table, which store data externally in S3 (Minio)
 
 ## Notes 
